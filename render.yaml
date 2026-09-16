@@ -7,4 +7,4 @@ services:
     startCommand: node server.js
     envVars:
       - key: SECRET_KEY
-        generateValue: true
+        value: nutrisnap_secret_2026
