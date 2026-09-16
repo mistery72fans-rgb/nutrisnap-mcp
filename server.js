@@ -90,8 +90,9 @@ const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
 
   // Public Health & Ping Endpoint (for 24/7 keep-alive monitor)
-  if (url.pathname === '/api/health' && req.method === 'GET') {
+  if (url.pathname === '/api/health' && (req.method === 'GET' || req.method === 'HEAD')) {
     res.writeHead(200, { 'Content-Type': 'application/json' });
+    if (req.method === 'HEAD') return res.end();
     return res.end(JSON.stringify({
       status: 'ok',
       message: 'NutriSnap Cloud MCP Server is active and reachable 24/7',
