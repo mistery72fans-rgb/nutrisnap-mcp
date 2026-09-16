@@ -1,0 +1,106 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "NutriSnap Nutrition & Calorie Tracker API",
+    "description": "API for ChatGPT and Claude to query daily calories, macronutrients, and logged meals from NutriSnap mobile app.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://nutrisnap-mcp.onrender.com"
+    }
+  ],
+  "paths": {
+    "/api/summary": {
+      "get": {
+        "operationId": "getDailyNutritionSummary",
+        "summary": "Get today's total calories, macros, and meals list",
+        "description": "Returns today's consumed calories, target calorie budget, protein, carbs, fat, and all logged meals.",
+        "responses": {
+          "200": {
+            "description": "Successful summary response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "date": { "type": "string" },
+                    "mealsCount": { "type": "integer" },
+                    "totalCalories": { "type": "integer" },
+                    "totalProtein": { "type": "number" },
+                    "totalCarbs": { "type": "number" },
+                    "totalFat": { "type": "number" },
+                    "meals": { "type": "array" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/meals": {
+      "get": {
+        "operationId": "getMealHistory",
+        "summary": "Get recent meals logged from phone",
+        "description": "Retrieves the list of all meals logged with calorie and macro breakdown.",
+        "responses": {
+          "200": {
+            "description": "List of logged meals",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "logMeal",
+        "summary": "Log a food or drink item into NutriSnap",
+        "description": "Allows ChatGPT to record a meal or snack directly into the user's food diary.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "calories"],
+                "properties": {
+                  "name": { "type": "string", "description": "Dish or food name" },
+                  "calories": { "type": "integer", "description": "Calories in kcal" },
+                  "protein": { "type": "number", "description": "Protein in grams" },
+                  "carbs": { "type": "number", "description": "Carbohydrates in grams" },
+                  "fat": { "type": "number", "description": "Fat in grams" },
+                  "mealType": { "type": "string", "enum": ["Breakfast", "Lunch", "Dinner", "Snack"] },
+                  "portionSize": { "type": "string", "description": "Estimated portion" },
+                  "advice": { "type": "string", "description": "Nutritional advice" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Meal logged successfully"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ]
+}

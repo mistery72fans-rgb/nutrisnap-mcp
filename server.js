@@ -99,6 +99,15 @@ const server = http.createServer((req, res) => {
     }));
   }
 
+  // Public OpenAPI schema for ChatGPT Custom Action / Plugin
+  if (url.pathname === '/openapi.json' && req.method === 'GET') {
+    const openApiPath = path.join(__dirname, 'openapi.json');
+    if (fs.existsSync(openApiPath)) {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      return res.end(fs.readFileSync(openApiPath, 'utf8'));
+    }
+  }
+
   // Authentication check for private food data
   if (url.pathname.startsWith('/api/meals') || url.pathname === '/api/summary') {
     if (!isAuthorized(req, url)) {
