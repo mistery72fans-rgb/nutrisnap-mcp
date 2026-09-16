@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "nutrisnap": {
+      "command": "node",
+      "args": ["C:\\Users\\91620\\AndroidStudioProjects\\NutriSnap\\mcp-server\\server.js"]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "nutrisnap-mcp-server",
+  "version": "1.0.0",
+  "description": "Model Context Protocol (MCP) Server for NutriSnap Nutrition & Calorie Tracking",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {},
+  "type": "commonjs"
+}
